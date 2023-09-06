@@ -12,5 +12,6 @@ public interface ItemService {
     Item saveItem(Item item, int userId);
 
     Item updateItem(Integer itemId, int userId, Item item);
+
     List<Item> searchItem(String text);
 }

@@ -8,16 +8,18 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class ItemRepositoryImpl implements ItemRepository{
+public class ItemRepositoryImpl implements ItemRepository {
     List<Item> items = new ArrayList<>();
     Integer nextId = 1;
-    private Integer getNewId(){
+
+    private Integer getNewId() {
         return nextId++;
     }
+
     @Override
     public List<Item> getAll(int userId) {
         return items.stream()
-                .filter(item->item.getOwnerId() == userId)
+                .filter(item -> item.getOwnerId() == userId)
                 .collect(Collectors.toList());
     }
 
@@ -41,7 +43,7 @@ public class ItemRepositoryImpl implements ItemRepository{
     }
 
     @Override
-    public List<Item> searchItem(String text){
+    public List<Item> searchItem(String text) {
         return items.stream()
                 .filter(item -> (item.getItemName().toUpperCase().contains(text.toUpperCase())
                         || item.getDescription().toUpperCase().contains(text.toUpperCase())) && item.getAvailable())

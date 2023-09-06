@@ -12,5 +12,6 @@ public interface ItemRepository {
     Item save(Item item);
 
     Item update(Item item);
+
     List<Item> searchItem(String text);
 }

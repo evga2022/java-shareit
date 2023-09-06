@@ -27,7 +27,7 @@ public class ItemController {
     }
 
     @GetMapping("/{itemId}")
-    public ItemDto getItemById(@PathVariable("itemId") Integer itemId){
+    public ItemDto getItemById(@PathVariable("itemId") Integer itemId) {
         return ItemMapper.toItemDto(itemService.getItemById(itemId));
     }
 
@@ -41,18 +41,18 @@ public class ItemController {
     @PatchMapping("/{id}")
     public ItemDto updateItem(@PathVariable("id") Integer itemId,
                               @RequestHeader("X-Sharer-User-Id") Integer userId,
-                              @RequestBody ItemDto itemDto){
+                              @RequestBody ItemDto itemDto) {
         checkUserAuthorisation(userId);
         return ItemMapper.toItemDto(itemService.updateItem(itemId, userId, ItemMapper.toItem(itemDto)));
     }
 
     @GetMapping("/search")
-    public List<ItemDto> searchItem(@RequestParam String text){
+    public List<ItemDto> searchItem(@RequestParam String text) {
         return itemService.searchItem(text).stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
     }
 
     private void checkUserAuthorisation(Integer userId) {
-        if(userId == null || userService.getUserById(userId) == null) {
+        if (userId == null || userService.getUserById(userId) == null) {
             throw new AuthorisationException();
         }
     }

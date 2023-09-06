@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Repository
-public class UserRepositoryImpl implements UserRepository{
+public class UserRepositoryImpl implements UserRepository {
     List<User> users = new ArrayList<>();
     Integer nextId = 1;
 
@@ -17,7 +17,7 @@ public class UserRepositoryImpl implements UserRepository{
         return users;
     }
 
-    private Integer getNewId(){
+    private Integer getNewId() {
         return nextId++;
     }
 
