@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
-    List<User> users = new ArrayList<>();
-    Integer nextId = 1;
+    private List<User> users = new ArrayList<>();
+    private Integer nextId = 1;
 
     @Override
     public List<User> findAll() {

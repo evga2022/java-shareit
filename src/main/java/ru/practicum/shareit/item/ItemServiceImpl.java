@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.NotFoundException;
 import ru.practicum.shareit.exception.ValidationException;
@@ -9,6 +10,7 @@ import ru.practicum.shareit.item.model.Item;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
@@ -33,7 +35,9 @@ public class ItemServiceImpl implements ItemService {
             throw new ValidationException();
         }
         item.setOwnerId(userId);
-        return itemRepository.save(item);
+        Item savedItem = itemRepository.save(item);
+        log.info("Добавлен Item(id = {}, name = {}) пользователем {}", item.getItemId(), item.getItemName(), userId);
+        return savedItem;
     }
 
     @Override
@@ -54,6 +58,7 @@ public class ItemServiceImpl implements ItemService {
         if (item.getRequest() != null) {
             itemToUpdate.setRequest(item.getRequest());
         }
+        log.info("Обновлен Item(id = {}, name = {})", item.getItemId(),item.getItemName());
         return itemRepository.update(itemToUpdate);
     }
 

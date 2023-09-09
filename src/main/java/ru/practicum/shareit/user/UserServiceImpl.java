@@ -1,6 +1,7 @@
 package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.DuplicateEntityException;
 import ru.practicum.shareit.exception.NotFoundException;
@@ -9,6 +10,7 @@ import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
@@ -33,7 +35,9 @@ public class UserServiceImpl implements UserService {
         if (user.getName() == null || user.getName().isEmpty() || user.getName().isBlank()) {
             user.setName(user.getEmail().split("@")[0]);
         }
-        return repository.save(user);
+        User savedUser = repository.save(user);
+        log.info("Добавлен User(id = {}, name = {}, email = {})", savedUser.getId(), savedUser.getName(), savedUser.getEmail());
+        return savedUser;
     }
 
     public User updateUser(Integer userId, User user) {
@@ -51,10 +55,12 @@ public class UserServiceImpl implements UserService {
             }
             userToUpdate.setEmail(user.getEmail());
         }
+        log.info("Обновлен User(id = {}, name = {}, email = {})", userToUpdate.getId(), userToUpdate.getName(), userToUpdate.getEmail());
         return repository.update(userToUpdate);
     }
 
     public void deleteUser(Integer id) {
+        log.info("Обновлен User(id = {})", id);
         repository.delete(id);
     }
 

@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 @Repository
 public class ItemRepositoryImpl implements ItemRepository {
-    List<Item> items = new ArrayList<>();
-    Integer nextId = 1;
+    private List<Item> items = new ArrayList<>();
+    private Integer nextId = 1;
 
     private Integer getNewId() {
         return nextId++;
