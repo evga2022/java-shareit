@@ -17,12 +17,12 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @RequestMapping("/items")
 public class ItemController {
-    private final String USER_ID_HEADER = "X-Sharer-User-Id";
+    private final String userIdHeader = "X-Sharer-User-Id";
     private final ItemService itemService;
     private final UserService userService;
 
     @GetMapping
-    public List<ItemDto> getAllItems(@RequestHeader(USER_ID_HEADER) Integer userId) {
+    public List<ItemDto> getAllItems(@RequestHeader(userIdHeader) Integer userId) {
         checkUserAuthorisation(userId);
         return itemService.getAllItems(userId).stream().map(ItemMapper::toItemDto).collect(Collectors.toList());
     }
@@ -34,14 +34,14 @@ public class ItemController {
 
     @PostMapping
     public ItemDto saveNewItem(@RequestBody ItemDto itemDto,
-                               @RequestHeader(USER_ID_HEADER) Integer userId) {
+                               @RequestHeader(userIdHeader) Integer userId) {
         checkUserAuthorisation(userId);
         return ItemMapper.toItemDto(itemService.saveItem(ItemMapper.toItem(itemDto), userId));
     }
 
     @PatchMapping("/{id}")
     public ItemDto updateItem(@PathVariable("id") Integer itemId,
-                              @RequestHeader(USER_ID_HEADER) Integer userId,
+                              @RequestHeader(userIdHeader) Integer userId,
                               @RequestBody ItemDto itemDto) {
         checkUserAuthorisation(userId);
         return ItemMapper.toItemDto(itemService.updateItem(itemId, userId, ItemMapper.toItem(itemDto)));
